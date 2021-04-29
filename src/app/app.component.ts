@@ -10,6 +10,10 @@ export class AppComponent {
   title = 'sas';
 
   constructor(private state: TestState) {
-    console.log(state);
+    this.state.state$.subscribe(v => {
+      console.log(v);
+    });
+    this.state.setState({name: 'test', id: 2});
+    this.state.patchState({name: 'test2'})
   }
 }

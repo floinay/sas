@@ -1,5 +1,5 @@
 import {Observable} from 'rxjs';
-import {DeepPartial} from './deep-partial';
+import {DeepPartial} from '../types/deep-partial';
 
 
 export interface StateContract<T> {
@@ -8,7 +8,7 @@ export interface StateContract<T> {
 
   setState(state: T): void;
 
-  patchState(state: Partial<T> | DeepPartial<T>): void;
+  patchState(state: DeepPartial<T>): void;
 
   resetState(): void;
 }

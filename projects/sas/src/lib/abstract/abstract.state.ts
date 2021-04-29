@@ -1,20 +1,24 @@
-import {validateMetadata} from '../util/validate-metadata';
-import {StateContract} from '../types/state.contract';
+import {StateContract} from '../contracts/state.contract';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {DeepPartial} from '../types/deep-partial';
-import {FullStateMetadata, getMetadata} from '../util/get-metadata';
+import {getMetadata} from '../util/get-metadata';
 import {cloneAndMerge} from '../util/clone-and-merge';
 import {cloneDeep} from '../util/clone-deep';
+import {validateMetadata} from '../util/validate-metadata';
+import {StateMetadata} from '../contracts/state-metadata';
+
 
 export abstract class AbstractState<T> implements StateContract<T> {
-  private metadata: FullStateMetadata<T> = getMetadata<T>(this);
-  private state = new BehaviorSubject<T>(this.metadata.default);
+  private metadata: StateMetadata<T> = getMetadata<T>(this) as StateMetadata<T>;
+  private state: BehaviorSubject<T> = new BehaviorSubject<T>(this.metadata?.defaults as T);
 
   get snapshot(): T {
     return this.state.getValue();
   }
 
-  readonly state$!: Observable<T>;
+  get state$(): Observable<T> {
+    return this.state.asObservable();
+  }
 
   protected constructor() {
     validateMetadata(this);
@@ -25,7 +29,7 @@ export abstract class AbstractState<T> implements StateContract<T> {
   }
 
   resetState(): void {
-    this.setState(this.metadata.default);
+    this.setState(this.metadata.defaults as T);
   }
 
   setState(state: T): void {

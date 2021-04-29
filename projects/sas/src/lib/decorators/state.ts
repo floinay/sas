@@ -1,16 +1,15 @@
 import 'reflect-metadata';
+import {PartialStateMetadata} from '../contracts/state-metadata';
+import {updateMetadata} from '../util/update-metadata';
+import {StateCtor} from '../types/state-ctor';
 
-export interface StateMetadata<T> {
-  name: string;
-  default?: T;
-}
 
-export function State<T>(meta: StateMetadata<T>) {
-  return function (ctor: Function) {
-    if (!meta.default) {
-      meta.default = {} as T;
+export function State<T>(meta: PartialStateMetadata<T>) {
+  return function (ctor: StateCtor<T>) {
+    if (!meta.defaults) {
+      meta.defaults = {} as T;
     }
-    Reflect.defineMetadata('sas_meta', meta, ctor);
+    updateMetadata(ctor, meta);
   };
 }
 
