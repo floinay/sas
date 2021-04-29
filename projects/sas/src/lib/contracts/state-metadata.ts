@@ -1,14 +1,18 @@
-import {OperatorFunction} from 'rxjs';
-import {StateFactory} from '../types/state-factory';
+import { OperatorFunction } from 'rxjs';
+import { StateFactory } from '../types/state-factory';
 
-type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+export type StatePipes<T> = OperatorFunction<T, T>[];
+
+export interface StateOptions<T> {
+  name: string;
+  defaults: T;
+  pipes?: StatePipes<T>;
+  factory?: StateFactory<T>;
+}
 
 export interface StateMetadata<T> {
   name: string;
   defaults: T;
-  pipes: OperatorFunction<T, T>[];
-  factory: StateFactory<T>;
+  pipes: StatePipes<T>;
+  factories: StateFactory<T>[];
 }
-
-export type  PartialStateMetadata<T> = WithOptional<StateMetadata<T>, 'defaults' | 'pipes' | 'factory'>;

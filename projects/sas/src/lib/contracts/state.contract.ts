@@ -8,7 +8,7 @@ export interface StateContract<T> {
 
   setState(state: T): void;
 
-  patchState(state: DeepPartial<T>): void;
+  patchState(state: DeepPartial<T> | T): void;
 
   resetState(): void;
 }

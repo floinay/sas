@@ -5,11 +5,11 @@ import {getMetadata} from '../util/get-metadata';
 import {cloneAndMerge} from '../util/clone-and-merge';
 import {cloneDeep} from '../util/clone-deep';
 import {validateMetadata} from '../util/validate-metadata';
-import {StateMetadata} from '../contracts/state-metadata';
+import {StateOptions} from '../contracts/state-metadata';
 
 
 export abstract class AbstractState<T> implements StateContract<T> {
-  private metadata: StateMetadata<T> = getMetadata<T>(this) as StateMetadata<T>;
+  private metadata: StateOptions<T> = getMetadata<T>(this) as StateOptions<T>;
   private state: BehaviorSubject<T> = new BehaviorSubject<T>(this.metadata?.defaults as T);
 
   get snapshot(): T {
@@ -20,11 +20,7 @@ export abstract class AbstractState<T> implements StateContract<T> {
     return this.state.asObservable();
   }
 
-  protected constructor() {
-    validateMetadata(this);
-  }
-
-  patchState(patches: DeepPartial<T>): void {
+  patchState(patches: DeepPartial<T> | T): void {
     this.state.next(cloneAndMerge(this.snapshot, patches));
   }
 

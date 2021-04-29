@@ -1,11 +1,14 @@
-import {PartialStateMetadata} from '../contracts/state-metadata';
-import {StateCtor} from '../types/state-ctor';
-import {getMetadata} from './get-metadata';
-import {SAS_METADATA_FACTORIES_KEY, SAS_METADATA_KEY} from '../constants';
-import {StateFactory} from '../types/state-factory';
+import { StateCtor } from '../types/state-ctor';
+import { getMetadata } from './get-metadata';
+import { SAS_METADATA_FACTORIES_KEY, SAS_METADATA_KEY } from '../constants';
+import { StateFactory } from '../types/state-factory';
+import { StateMetadata, StateOptions } from '../contracts/state-metadata';
 
-export function updateMetadata(ctor: StateCtor<any>, updates: PartialStateMetadata<any>): void {
-  const meta = getMetadata(ctor.prototype) || {} as PartialStateMetadata<any>;
+export function updateMetadata(ctor: StateCtor<any>, updates: StateOptions<any>): void {
+  const meta = getMetadata(ctor.prototype) || {} as StateMetadata<any>;
+  if (updates.name) {
+    meta.name = updates.name;
+  }
   if (updates.defaults) {
     meta.defaults = updates.defaults;
   }

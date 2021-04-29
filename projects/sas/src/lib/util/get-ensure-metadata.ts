@@ -1,5 +1,5 @@
 import {StateContract} from '../contracts/state.contract';
-import {PartialStateMetadata, StateMetadata} from '../contracts/state-metadata';
+import {PartialStateMetadata, StateOptions} from '../contracts/state-metadata';
 import {validateMetadata} from './validate-metadata';
 import {factory} from './factory';
 import {getMetadata} from './get-metadata';
@@ -8,7 +8,7 @@ import {StateFactory} from '../types/state-factory';
 import {BehaviorSubject} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 
-export function getEnsureMetadata<T>(state: StateContract<T>): StateMetadata<T> {
+export function getEnsureMetadata<T>(state: StateContract<T>): StateOptions<T> {
   validateMetadata(state);
   const meta = getMetadata(state) as PartialStateMetadata<T>;
   const factories = Reflect.getMetadata(SAS_METADATA_FACTORIES_KEY, state) as StateFactory<T>[] || [];
@@ -29,5 +29,5 @@ if (!meta.pipes) {
   meta.pipes = [];
 }
 
-return meta as StateMetadata<T>;
+return meta as StateOptions<T>;
 }
