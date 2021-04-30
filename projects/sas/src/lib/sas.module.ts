@@ -1,16 +1,10 @@
-import { NgModule } from '@angular/core';
-import { SasComponent } from './sas.component';
-
+import {NgModule} from '@angular/core';
 
 
 @NgModule({
-  declarations: [
-    SasComponent
-  ],
-  imports: [
-  ],
-  exports: [
-    SasComponent
-  ]
+  declarations: [],
+  imports: [],
+  exports: []
 })
-export class SasModule { }
+export class SasModule {
+}

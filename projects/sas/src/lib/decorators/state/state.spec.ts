@@ -1,7 +1,7 @@
 import { State } from './state';
-import { AbstractState } from '../abstract/abstract.state';
-import { SAS_METADATA_KEY } from '../constants';
-import { StateOptions, StatePipes } from '../contracts/state-metadata';
+import { AbstractState } from '../../abstract/abstract.state';
+import { SAS_META_KEY } from './constants';
+import { StateMeta, StatePipes } from './contracts/state-meta';
 import { tap } from 'rxjs/operators';
 
 const defaults = 'default';
@@ -15,7 +15,7 @@ class TestState extends AbstractState<string> {
 
 describe('StateDecorator', () => {
   const state = new TestState();
-  const meta = Reflect.getMetadata(SAS_METADATA_KEY, state) as StateOptions<any>;
+  const meta = Reflect.getMetadata(SAS_META_KEY, state) as StateMeta<any>;
   it('metadata have name', () => {
     expect(meta.name).toEqual(name);
   });

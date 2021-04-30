@@ -1,34 +1,36 @@
-import {StateContract} from '../contracts/state.contract';
+import {StateContract} from '../decorators/state/contracts/state.contract';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {DeepPartial} from '../types/deep-partial';
-import {getMetadata} from '../util/get-metadata';
 import {cloneAndMerge} from '../util/clone-and-merge';
-import {cloneDeep} from '../util/clone-deep';
-import {validateMetadata} from '../util/validate-metadata';
-import {StateOptions} from '../contracts/state-metadata';
+import {createState} from '../decorators/state/metadata-helpers/create-state';
+import {StateMeta} from '../decorators/state/contracts/state-meta';
+import {getMetadata} from '../decorators/state/metadata-helpers/get-metadata';
+import {Immutable} from '../types/immutable';
+import {getPipes} from '../decorators/state/metadata-helpers/pipes';
 
 
 export abstract class AbstractState<T> implements StateContract<T> {
-  private metadata: StateOptions<T> = getMetadata<T>(this) as StateOptions<T>;
-  private state: BehaviorSubject<T> = new BehaviorSubject<T>(this.metadata?.defaults as T);
+  private meta: StateMeta<T> = getMetadata(this);
+  private state: BehaviorSubject<T> = createState(this)
 
-  get snapshot(): T {
+  get snapshot(): Immutable<T> {
     return this.state.getValue();
   }
 
   get state$(): Observable<T> {
-    return this.state.asObservable();
+    // @ts-ignore
+    return this.state.asObservable().pipe(...getPipes(this));
   }
 
   patchState(patches: DeepPartial<T> | T): void {
-    this.state.next(cloneAndMerge(this.snapshot, patches));
+    this.state.next(cloneAndMerge<T>(this.snapshot as T, patches));
   }
 
   resetState(): void {
-    this.setState(this.metadata.defaults as T);
+    this.setState(this.meta.defaults as T);
   }
 
   setState(state: T): void {
-    this.state.next(cloneDeep(state));
+    this.state.next(state);
   }
 }
