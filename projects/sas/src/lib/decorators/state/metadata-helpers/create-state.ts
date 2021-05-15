@@ -1,8 +1,8 @@
-import {BehaviorSubject, of, ReplaySubject} from 'rxjs';
+import {BehaviorSubject, of} from 'rxjs';
 import {StateContract} from '../contracts/state.contract';
 import {getFactories} from './factories';
 import {getMetadata} from './get-metadata';
-import {filter, switchMap, take} from 'rxjs/operators';
+import {switchMap, take} from 'rxjs/operators';
 
 export const createState = <T>(state: StateContract<T>): BehaviorSubject<T> => {
   const factories = getFactories(state);
@@ -15,7 +15,7 @@ export const createState = <T>(state: StateContract<T>): BehaviorSubject<T> => {
         (prev, current) => prev.pipe(switchMap(current)),
         of(meta.defaults)
       )
-      .pipe(take(1), filter(value => Boolean(value)))
+      .pipe(take(1))
       .subscribe(value => sub.next(value as T));
   }
 

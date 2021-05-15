@@ -1,11 +1,10 @@
 import {Observable} from 'rxjs';
 import {DeepPartial} from '../../../types/deep-partial';
-import {Immutable} from '../../../types/immutable';
 
 
 export interface StateContract<T> {
-  readonly snapshot: Immutable<T>;
-  readonly state$: Observable<Immutable<T>>;
+  readonly snapshot: T;
+  readonly state$: Observable<T>;
 
   setState(state: T): void;
 
