@@ -4,7 +4,7 @@ import {addFactory} from './factories';
 import {StateContract} from '../contracts/state.contract';
 import {addPipes} from './pipes';
 
-export function updateMetadata(state: StateContract<any>, updates: StateMeta<any>): void {
+export function updateMetadata(state: StateContract<any>, updates: Partial<StateMeta<any>>): void {
   const meta = Reflect.getMetadata(SAS_META_KEY, state) || {};
   if (updates.name) {
     meta.name = updates.name;
