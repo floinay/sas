@@ -1,5 +1,5 @@
 import {updateMetadata} from './update-metadata';
-import {AbstractState} from '../../../abstract/abstract.state';
+import {AbstractState} from '../../abstract/abstract.state';
 import {StateFactory} from '../types/state-factory';
 import {of} from 'rxjs';
 import {StatePipes} from '../contracts/state-meta';
@@ -7,7 +7,8 @@ import {tap} from 'rxjs/operators';
 import {getMetadata} from './get-metadata';
 import {getPipes} from './pipes';
 import {getFactories} from './factories';
-
+import {State} from '../state';
+@State({name: 'test'})
 class TestState extends AbstractState<string> {
 
 }

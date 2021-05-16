@@ -6,9 +6,6 @@ import {StateMeta} from './contracts/state-meta';
 
 export function State<T>(meta: StateMeta<T>): (ctor: StateCtor<T>) => void {
   return (ctor: StateCtor<T>) => {
-    if (!meta.defaults) {
-      meta.defaults = {} as T;
-    }
     updateMetadata(ctor.prototype, meta);
   };
 }

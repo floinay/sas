@@ -1,5 +1,5 @@
 import {State} from './state';
-import {AbstractState} from '../../abstract/abstract.state';
+import {AbstractState} from '../abstract/abstract.state';
 import {StatePipes} from './contracts/state-meta';
 import {tap} from 'rxjs/operators';
 import {getMetadata} from './metadata-helpers/get-metadata';

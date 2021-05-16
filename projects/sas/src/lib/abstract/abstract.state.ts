@@ -1,35 +1,38 @@
-import {StateContract} from '../decorators/state/contracts/state.contract';
+import {StateContract} from '../state/contracts/state.contract';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {DeepPartial} from '../types/deep-partial';
-import {cloneAndMerge} from '../util/clone-and-merge';
-import {createState} from '../decorators/state/metadata-helpers/create-state';
-import {StateMeta} from '../decorators/state/contracts/state-meta';
-import {getMetadata} from '../decorators/state/metadata-helpers/get-metadata';
-import {getPipes} from '../decorators/state/metadata-helpers/pipes';
+import {createState} from '../state/metadata-helpers/create-state';
+import {StateMeta} from '../state/contracts/state-meta';
+import {getMetadata} from '../state/metadata-helpers/get-metadata';
+import {getPipes} from '../state/metadata-helpers/pipes';
+import {Action} from '../actions/action';
+import {StateContext} from '../state/contracts/state-context';
+import {buildStateContext} from '../util/build-state-context';
 
 
 export abstract class AbstractState<T> implements StateContract<T> {
-  private meta: StateMeta<T> = getMetadata(this);
-  private state: BehaviorSubject<T> = createState(this)
+  private readonly meta: StateMeta<T> = getMetadata(this);
+  private readonly state: BehaviorSubject<T> = createState(this)
+  protected readonly ctx: StateContext<T> = buildStateContext(this.state, this.meta);
+  // @ts-ignore
+  readonly state$: Observable<T> = this.state.asObservable().pipe(...getPipes(this));
 
   get snapshot(): T {
     return this.state.getValue();
   }
 
-  get state$(): Observable<T> {
-    // @ts-ignore
-    return this.state.asObservable().pipe(...getPipes(this));
-  }
-
+  @Action()
   patchState(patches: DeepPartial<T> | T): void {
-    this.state.next(cloneAndMerge<T>(this.snapshot as T, patches));
+    this.ctx.patchState(patches);
   }
 
+  @Action()
   resetState(): void {
-    this.setState(this.meta.defaults as T);
+    this.ctx.resetState();
   }
 
+  @Action()
   setState(state: T): void {
-    this.state.next(state);
+    this.ctx.setState(state);
   }
 }

@@ -1,7 +1,7 @@
 import {StateFactory} from '../types/state-factory';
 import {of} from 'rxjs';
 import {State} from '../state';
-import {AbstractState} from '../../../abstract/abstract.state';
+import {AbstractState} from '../../abstract/abstract.state';
 import {take} from 'rxjs/operators';
 
 const defaults = 'default';
