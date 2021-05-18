@@ -13,7 +13,7 @@ import {buildStateContext} from '../util/build-state-context';
 export abstract class AbstractState<T> implements StateContract<T> {
   private readonly meta: StateMeta<T> = getMetadata(this);
   private readonly state: BehaviorSubject<T> = createState(this)
-  protected readonly ctx: StateContext<T> = buildStateContext(this.state, this.meta);
+  readonly ctx: StateContext<T> = buildStateContext(this.state, this.meta);
   // @ts-ignore
   readonly state$: Observable<T> = this.state.asObservable().pipe(...getPipes(this));
 

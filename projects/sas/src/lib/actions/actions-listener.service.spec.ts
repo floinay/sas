@@ -20,7 +20,7 @@ describe('ActionsListenerService', () => {
     expect(service).toBeTruthy();
   });
   it('listen all working', (done) => {
-    const action = {name: 'test', value: ''};
+    const action = {name: 'test', value: '', stateName: 'test'};
     service.listen().pipe(take(1)).subscribe(value => {
       expect(action).toEqual(value);
       done();
@@ -28,8 +28,8 @@ describe('ActionsListenerService', () => {
     actions$.next(action)
   });
   it('listen by name working', (done) => {
-    const action: ActionResponse<number> = {name: 'test', value: 0};
-    const wrongNameAction = {name: 'wrong_name_test', value: ''};
+    const action: ActionResponse<number> = {name: 'test', value: 0, stateName: 'test'};
+    const wrongNameAction = {name: 'wrong_name_test', value: '', stateName: 'test'};
 
     service.listen<number>(action.name).pipe(take(1)).subscribe(value => {
       expect(action).toEqual(value);

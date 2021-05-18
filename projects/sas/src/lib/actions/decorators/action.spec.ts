@@ -10,7 +10,7 @@ import {Injectable, Injector} from '@angular/core';
 import {ActionsInjector} from '../actions-injector';
 
 @Injectable()
-@State({name: 'test', defaults: '', pipes: [filter(state => Boolean(state))]})
+@State({name: 'action_test_state', defaults: '', pipes: [filter(state => Boolean(state))]})
 class TestState extends AbstractState<string> {
   @Action()
   testAction() {
@@ -45,7 +45,7 @@ describe('Action Decorator With ActionsModule', () => {
 
   it('action change state', (done) => {
     const state = new TestState();
-    actions$.pipe(take(1)).subscribe(r => {
+    actions$.pipe(filter(r => r.stateName === 'action_test_state'), take(1)).subscribe(r => {
       expect('test action value').toEqual(r.value);
       done();
     });
