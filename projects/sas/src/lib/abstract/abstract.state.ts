@@ -5,7 +5,7 @@ import {createState} from '../state/metadata-helpers/create-state';
 import {StateMeta} from '../state/contracts/state-meta';
 import {getMetadata} from '../state/metadata-helpers/get-metadata';
 import {getPipes} from '../state/metadata-helpers/pipes';
-import {Action} from '../actions/action';
+import {Action} from '../actions/decorators/action';
 import {StateContext} from '../state/contracts/state-context';
 import {buildStateContext} from '../util/build-state-context';
 

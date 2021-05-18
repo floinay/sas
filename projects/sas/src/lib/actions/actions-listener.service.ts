@@ -11,7 +11,6 @@ export class ActionsListenerService {
 
   listen<T>(name: string): Observable<ActionResponse<T>>;
   listen(): Observable<any>;
-  listen<T>(name?: string): Observable<T>;
   listen(name?: string): any {
     if (name) {
       return this.actions$.asObservable().pipe(filter((a) => a.name === name));

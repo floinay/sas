@@ -14,7 +14,7 @@ interface TestStateInterface {
 @State<TestStateInterface>({
   name: 'test',
   pipes: [
-    filter(value => Boolean(value.id))
+    filter(value => Boolean(value))
   ]
 })
 export class TestState extends AbstractState<TestStateInterface> {
