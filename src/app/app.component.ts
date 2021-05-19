@@ -13,7 +13,7 @@ export class AppComponent {
     this.state.state$.subscribe(v => {
       console.log(v);
     });
-    this.state.setState({name: 'test', id: 2});
-    this.state.patchState({name: 'test2'})
+    // this.state.setState({name: 'test', id: 2});
+    // this.state.patchState({name: 'test2'})
   }
 }
