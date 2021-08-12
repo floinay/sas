@@ -1,19 +1,21 @@
 import {Component} from '@angular/core';
 import {TestState} from '../state/test-state';
+import {AutoFetch} from '../../projects/sas/src/lib/plugins/route-observer/auto-fetch';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  providers: [AutoFetch()]
 })
 export class AppComponent {
   title = 'sas';
 
-  constructor(private state: TestState) {
-    this.state.state$.subscribe(v => {
+  constructor(state: TestState) {
+
+    state.state$.subscribe(v => {
       console.log(v);
     });
-    // this.state.setState({name: 'test', id: 2});
-    // this.state.patchState({name: 'test2'})
   }
 }

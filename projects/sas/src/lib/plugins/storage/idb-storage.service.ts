@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {StorageContract} from '../../storage.contract';
+import {StorageContract} from './storage.contract';
 import {Observable} from 'rxjs';
 import {StorageMap} from '@ngx-pwa/local-storage';
 
