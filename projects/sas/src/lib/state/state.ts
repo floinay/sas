@@ -1,4 +1,4 @@
-import 'reflect-metadata';
+// import 'reflect-metadata';
 import {updateMetadata} from './metadata-helpers/update-metadata';
 import {StateCtor} from './types/state-ctor';
 import {StateMeta} from './contracts/state-meta';
