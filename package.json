@@ -8,7 +8,8 @@
     "publish": "ng build sas --prod && cd dist/sas && npm publish --access=public",
     "test": "ng test sas",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "watch": "ng build sas --watch"
   },
   "private": true,
   "dependencies": {
