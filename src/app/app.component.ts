@@ -1,6 +1,4 @@
 import {Component} from '@angular/core';
-import {TestState} from '../state/test-state';
-import {AutoFetchDecorator} from '../../projects/sas/src/lib/plugins/route-observer/auto-fetch';
 
 
 @Component({
@@ -12,10 +10,6 @@ import {AutoFetchDecorator} from '../../projects/sas/src/lib/plugins/route-obser
 export class AppComponent {
   title = 'sas';
 
-  constructor(state: TestState) {
-
-    state.state$.subscribe(v => {
-      console.log(v);
-    });
+  constructor() {
   }
 }

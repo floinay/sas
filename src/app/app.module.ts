@@ -21,9 +21,15 @@ import {RouteComponentComponent} from './route-component/route-component.compone
       {
         path: 'test/:slug',
         component: RouteComponentComponent
-      }]),
+      },
+      {
+        path: 'lazy',
+        loadChildren: () => import('./lazy-page/lazy-page.module').then(m => m.LazyPageModule)
+      }
+      ]),
 
-    RouteObserverModule,],
+    RouteObserverModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

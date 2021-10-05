@@ -1,28 +1,18 @@
-import {APP_BOOTSTRAP_LISTENER, ComponentRef, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {ObserverInjectorService} from './observer-injector.service';
-import {getWatchers} from './auto-fetch';
-import {ActivatedRoute, ActivatedRouteSnapshot} from '@angular/router';
+import {RouteListenerService} from './route-listener.service';
+import {getPreviousWatchers, ROUTE_OBSERVER_WATCHERS$} from './route-observer-watchers';
 
 
 @NgModule({
   providers: [
-    ObserverInjectorService,
-    {
-      provide: APP_BOOTSTRAP_LISTENER,
-      multi: true,
-      useFactory: () => (c: ComponentRef<any>) => {
-        const watchers = getWatchers(c.instance);
-        console.log(watchers, c.instance);
-        if (watchers.length) {
-          watchers.forEach((factory) => {
-            factory(c.injector);
-          })
-        }
-      }
-    }
+    ObserverInjectorService
   ]
 })
 export class RouteObserverModule {
-  constructor(observerInjector: ObserverInjectorService) {
+
+  constructor(routeListenerService: RouteListenerService) {
+    getPreviousWatchers().forEach(value => routeListenerService.watch(value).subscribe());
+    ROUTE_OBSERVER_WATCHERS$.subscribe(value => routeListenerService.watch(value).subscribe());
   }
 }

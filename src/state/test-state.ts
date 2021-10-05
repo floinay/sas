@@ -2,8 +2,9 @@ import {State} from '../../projects/sas/src/lib/state/state';
 import {Injectable} from '@angular/core';
 import {AbstractState, Persistence} from '../../projects/sas/src/public-api';
 import {filter} from 'rxjs/operators';
-import {HasFetch} from '../../projects/sas/src/lib/plugins/route-observer/auto-fetch';
-import {Observable, observable, of} from 'rxjs';
+import {Observable, of} from 'rxjs';
+import {ObserveRoute} from '../../projects/sas/src/lib/plugins/route-observer/observe-route';
+import {RouteContext} from '../../projects/sas/src/lib/plugins/route-observer/route-listener.service';
 
 interface TestStateInterface {
   name: string;
@@ -20,14 +21,14 @@ interface TestStateInterface {
 @Injectable({
   providedIn: 'root',
 })
-export class TestState extends AbstractState<TestStateInterface> implements HasFetch {
+export class TestState extends AbstractState<TestStateInterface> {
   constructor() {
     super();
   }
-  
-  fetch(): Observable<any> {
-    console.log('qweqw');
+
+  @ObserveRoute('/lazy', {test: '*'})
+  fetch(context: RouteContext): Observable<any> {
+    console.log(context);
     return of('qwe');
   }
-
 }
