@@ -1,5 +1,5 @@
 import {Subject} from 'rxjs';
-import {RouteObserverWatcher} from './route-listener.service';
+import {RouteObserverWatcher} from './services/route-listener.service';
 
 
 const ROUTE_OBSERVER_WATCHERS = new Subject<RouteObserverWatcher>();

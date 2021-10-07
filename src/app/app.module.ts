@@ -7,6 +7,7 @@ import {RouteObserverModule} from '../../projects/sas/src/lib/plugins/route-obse
 import {SasStoragePluginModule} from '../../projects/sas/src/lib/plugins/storage/sas-storage-plugin.module';
 import {RouterModule} from '@angular/router';
 import {RouteComponentComponent} from './route-component/route-component.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import {RouteComponentComponent} from './route-component/route-component.compone
     BrowserModule,
     SasActionsModule,
     SasStoragePluginModule,
+    HttpClientModule,
     RouterModule.forRoot([
       {
         path: 'test/:slug',
@@ -26,7 +28,7 @@ import {RouteComponentComponent} from './route-component/route-component.compone
         path: 'lazy',
         loadChildren: () => import('./lazy-page/lazy-page.module').then(m => m.LazyPageModule)
       }
-      ]),
+    ]),
 
     RouteObserverModule
   ],

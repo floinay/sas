@@ -1,8 +1,10 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, NavigationEnd, Router} from '@angular/router';
+import {Inject, Injectable, Injector} from '@angular/core';
 import {filter, map, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {isEmpty} from 'lodash-es';
+import {StateContract} from '../../../state';
+import {RouterService} from '../interfaces/router-service';
+import {ROUTER_SERVICE} from '../providers';
 
 
 type WithContextType = (context: RouteContext) => any
@@ -13,6 +15,7 @@ export type QueryParams = { [key: string]: string; }
 export interface RouteObserverWatcher {
   url: string;
   callback: ObserveRouteMethodType;
+  base: StateContract<any>;
   queryParams: QueryParams;
 }
 
@@ -25,20 +28,17 @@ export class RouteContext {
 
 @Injectable({providedIn: 'root'})
 export class RouteListenerService {
-  private baseFilter$ = this.router.events.pipe(
-    filter((e) => e instanceof NavigationEnd)
-  ) as Observable<NavigationEnd>;
-
-  constructor(public router: Router) {
+  constructor(@Inject(ROUTER_SERVICE) private router: RouterService, private injector: Injector) {
 
   }
 
-  watch({url, callback, queryParams}: RouteObserverWatcher): Observable<any> {
-    return this.baseFilter$.pipe(
-      map(e => this.checkUrlAndGetParametersIfExists(url, e.url) as unknown as RouteParameters),
+  watch({url, callback, queryParams, base}: RouteObserverWatcher): Observable<any> {
+    return this.router.onNavigationEnd$.pipe(
+      map(e => this.checkUrlAndGetParametersIfExists(url, e) as unknown as RouteParameters),
       filter(v => Boolean(v) && this.checkQueryParams(queryParams)),
       tap(value => {
-        callback(new RouteContext(value, this.router.routerState.root.snapshot.queryParams));
+        const bindCallback = callback.bind(this.injector.get(base));
+        bindCallback(new RouteContext(value, this.router.queryParams()));
       })
     );
   }
@@ -47,7 +47,7 @@ export class RouteListenerService {
     if (isEmpty(params)) {
       return true;
     }
-    const routeParams = this.router.routerState.root.snapshot.queryParams;
+    const routeParams = this.router.queryParams();
     return Boolean(Object.entries(params).filter(([key, value]) => {
       if (value === '*' && key in routeParams) {
         return true;
@@ -58,6 +58,7 @@ export class RouteListenerService {
   }
 
   private checkUrlAndGetParametersIfExists(url: string, currentUrl: string): false | RouteParameters {
+    console.log(url);
     if (url === currentUrl) {
       return {};
     }

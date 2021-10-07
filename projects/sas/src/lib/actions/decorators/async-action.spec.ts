@@ -82,7 +82,6 @@ describe('AsyncAction Decorator With ActionsModule', () => {
 
   it('set state async action', done => {
     actions$.pipe(filter(r => r.name === 'set'), take(1)).subscribe(r => {
-      console.log(r);
       expect({id: '1', name: 'ivan'}).toEqual(r.value)
       done();
     });

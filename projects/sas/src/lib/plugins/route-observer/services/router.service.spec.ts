@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RouteListenerService } from './route-listener.service';
+import { RouterService } from './router.service';
 
-describe('RouteListenerService', () => {
-  let service: RouteListenerService;
+describe('RouterService', () => {
+  let service: RouterService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(RouteListenerService);
+    service = TestBed.inject(RouterService);
   });
 
   it('should be created', () => {
