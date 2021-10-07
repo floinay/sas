@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
-import {RouteListenerService} from './services/route-listener.service';
-import {getPreviousWatchers, ROUTE_OBSERVER_WATCHERS$} from './route-observer-watchers';
+import {ObserveRouteService} from './services/observe-route.service';
+import {getPreviousWatchers, WATCHERS$} from './watchers/watchers';
 import {RouterService} from './services/router.service';
 import {ROUTER_SERVICE} from './providers';
 
@@ -14,9 +14,9 @@ import {ROUTER_SERVICE} from './providers';
     }
   ]
 })
-export class RouteObserverModule {
-  constructor(routeListenerService: RouteListenerService) {
+export class AirRouteObserverModule {
+  constructor(routeListenerService: ObserveRouteService) {
     getPreviousWatchers().forEach(value => routeListenerService.watch(value).subscribe());
-    ROUTE_OBSERVER_WATCHERS$.subscribe(value => routeListenerService.watch(value).subscribe());
+    WATCHERS$.subscribe(value => routeListenerService.watch(value).subscribe());
   }
 }

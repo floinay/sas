@@ -4,7 +4,7 @@ import {AbstractState, Persistence} from '../../projects/sas/src/public-api';
 import {filter} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 import {ObserveRoute} from '../../projects/sas/src/lib/plugins/route-observer/observe-route';
-import {RouteContext} from '../../projects/sas/src/lib/plugins/route-observer/services/route-listener.service';
+import {RouteContext} from '../../projects/sas/src/lib/plugins/route-observer/services/observe-route.service';
 import {HttpClient} from '@angular/common/http';
 
 interface TestStateInterface {

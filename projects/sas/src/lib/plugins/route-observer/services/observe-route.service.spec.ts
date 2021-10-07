@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {State} from '../../../state/state';
 import {AbstractState} from '../../../abstract/abstract.state';
 import {ObserveRoute} from '../observe-route';
-import {QueryParams, RouteContext, RouteListenerService} from './route-listener.service';
+import {QueryParams, RouteContext, ObserveRouteService} from './observe-route.service';
 import {RouterService as RouterServiceContract} from '../interfaces/router-service';
 import {Subject} from 'rxjs';
 import {ROUTER_SERVICE} from '../providers';
@@ -61,7 +61,7 @@ class TestState extends AbstractState<TestStateInterface> {
 }
 
 describe('Observer Injector Service', () => {
-  let service: RouteListenerService;
+  let service: ObserveRouteService;
   let router: RouterService;
   let state: TestState;
   beforeEach(() => {
@@ -74,7 +74,7 @@ describe('Observer Injector Service', () => {
       ]
     });
     router = TestBed.inject<RouterService>(ROUTER_SERVICE);
-    service = TestBed.inject(RouteListenerService);
+    service = TestBed.inject(ObserveRouteService);
     state = TestBed.inject(TestState);
   });
 

@@ -3,7 +3,7 @@ import {NavigationEnd, Router} from '@angular/router';
 import {RouterService as RouterServiceContract} from '../interfaces/router-service';
 import {filter, map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import {QueryParams} from './route-listener.service';
+import {QueryParams} from './observe-route.service';
 
 @Injectable()
 export class RouterService implements RouterServiceContract {
