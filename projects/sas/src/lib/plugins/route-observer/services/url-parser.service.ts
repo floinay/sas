@@ -12,11 +12,12 @@ export class UrlParserService {
   constructor(@Inject(ROUTER_SERVICE) readonly router: RouterService) {
   }
 
-  checkQueryParams(params: QueryParams): boolean {
+  checkQueryParams(params: QueryParams, currentParams?: QueryParams): boolean {
     if (isEmpty(params)) {
       return true;
     }
-    const routeParams = this.router.queryParams();
+    const routeParams = currentParams || this.router.queryParams();
+
     return Boolean(Object.entries(params).filter(([key, value]) => {
       if (value === '*' && key in routeParams) {
         return true;

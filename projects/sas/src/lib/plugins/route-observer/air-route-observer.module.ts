@@ -3,6 +3,8 @@ import {ObserveRouteService} from './services/observe-route.service';
 import {getPreviousWatchers, WATCHERS$} from './watchers/watchers';
 import {RouterService} from './services/router.service';
 import {ROUTER_SERVICE} from './providers';
+import {getPreviousLeaveWatchers, LEAVE_WATCHERS$} from './watchers/leave-watchers';
+import {ObserveRouteLeaveService} from './services/observe-route-leave.service';
 
 
 @NgModule({
@@ -15,8 +17,11 @@ import {ROUTER_SERVICE} from './providers';
   ]
 })
 export class AirRouteObserverModule {
-  constructor(routeListenerService: ObserveRouteService) {
-    getPreviousWatchers().forEach(value => routeListenerService.watch(value).subscribe());
-    WATCHERS$.subscribe(value => routeListenerService.watch(value).subscribe());
+  constructor(observeRouteService: ObserveRouteService, observeRouteLeaveService: ObserveRouteLeaveService) {
+    getPreviousWatchers().forEach(value => observeRouteService.watch(value).subscribe());
+    WATCHERS$.subscribe(value => observeRouteService.watch(value).subscribe());
+
+    getPreviousLeaveWatchers().forEach(value => observeRouteLeaveService.watch(value).subscribe());
+    LEAVE_WATCHERS$.subscribe(value => observeRouteLeaveService.watch(value).subscribe());
   }
 }

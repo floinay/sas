@@ -1,11 +1,11 @@
 import {State} from '../../projects/sas/src/lib/state/state';
 import {Injectable} from '@angular/core';
-import {AbstractState, Persistence} from '../../projects/sas/src/public-api';
+import {AbstractState, ObserveRouteLeave, Persistence} from '../../projects/sas/src/public-api';
 import {filter} from 'rxjs/operators';
-import {Observable, of} from 'rxjs';
 import {ObserveRoute} from '../../projects/sas/src/lib/plugins/route-observer/observe-route';
-import {RouteContext} from '../../projects/sas/src/lib/plugins/route-observer/services/observe-route.service';
 import {HttpClient} from '@angular/common/http';
+import {RouteContext} from 'sas';
+import {LeaveRouteContext} from '../../projects/sas/src/lib/plugins/route-observer/services/context/leave-route-context';
 
 interface TestStateInterface {
   name: string;
@@ -28,11 +28,15 @@ export class TestState extends AbstractState<TestStateInterface> {
   }
 
   @ObserveRoute('/lazy')
-  fetch(context: RouteContext): Observable<any> {
+  fetch(context: RouteContext): void {
     console.log(this.httpClient);
     this.resetState();
-    this.patchState({name: '2'});
-    console.log(this.snapshot);
-    return of('qwe');
+    this.patchState({name: 'Lazy'});
+  }
+
+  @ObserveRouteLeave('/lazy', {test: '2'})
+  reset(context: LeaveRouteContext): void {
+    console.log(context);
+    this.resetState();
   }
 }

@@ -10,7 +10,7 @@ export class RouterService implements RouterServiceContract {
   private baseFilter$ = this.router.events.pipe(
     filter((e) => e instanceof NavigationEnd)
   ) as Observable<NavigationEnd>;
-  readonly onNavigationEnd$: Observable<string> = this.baseFilter$.pipe(map(e => e.url));
+  readonly onNavigationEnd$: Observable<string> = this.baseFilter$.pipe(map(e => e.url.split('?')[0]));
 
   queryParams(): QueryParams {
     return this.router.routerState.root.snapshot.queryParams;

@@ -5,6 +5,7 @@ import {StateContract} from '../../../state';
 import {RouterService} from '../interfaces/router-service';
 import {ROUTER_SERVICE} from '../providers';
 import {UrlParserService} from './url-parser.service';
+import {RouteContext} from './context/route-context';
 
 
 type WithContextType = (context: RouteContext) => any
@@ -21,10 +22,7 @@ export interface RouteObserverWatcher {
 
 export type RouteParameters = { [key: string]: string; };
 
-export class RouteContext {
-  constructor(public params: RouteParameters, public queryParams: RouteParameters) {
-  }
-}
+
 
 @Injectable({providedIn: 'root'})
 export class ObserveRouteService {
