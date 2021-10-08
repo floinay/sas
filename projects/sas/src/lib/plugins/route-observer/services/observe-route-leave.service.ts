@@ -1,8 +1,8 @@
 import {Inject, Injectable, Injector} from '@angular/core';
 import {ROUTER_SERVICE} from '../providers';
 import {RouterService} from '../interfaces/router-service';
-import {Observable} from 'rxjs';
-import {auditTime, filter, map, tap} from 'rxjs/operators';
+import {isObservable, Observable} from 'rxjs';
+import {auditTime, filter, map, take, tap} from 'rxjs/operators';
 import {QueryParams, RouteObserverWatcher} from './observe-route.service';
 import {UrlParserService} from './url-parser.service';
 import {LeaveRouteContext} from './context/leave-route-context';
@@ -52,13 +52,16 @@ export class ObserveRouteLeaveService {
       filter(v => Boolean(v)),
       tap(value => {
         const bindCallback = callback.bind(this.injector.get(base));
-        bindCallback(new LeaveRouteContext(
+        const response = bindCallback(new LeaveRouteContext(
             this.urlService.checkUrlAndGetParametersIfExists(url,
               this.urlHistory[this.urlHistory.length - 1]) || {},
             this.router.queryParams(), this.previousQueryParams || {},
             this.previousUrl || '', value || {}
           )
         );
+        if (isObservable(response)) {
+          response.pipe(take(1)).subscribe();
+        }
       })
     );
   }

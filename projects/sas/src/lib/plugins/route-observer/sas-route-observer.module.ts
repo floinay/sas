@@ -16,7 +16,7 @@ import {ObserveRouteLeaveService} from './services/observe-route-leave.service';
     }
   ]
 })
-export class AirRouteObserverModule {
+export class SasRouteObserverModule {
   constructor(observeRouteService: ObserveRouteService, observeRouteLeaveService: ObserveRouteLeaveService) {
     getPreviousWatchers().forEach(value => observeRouteService.watch(value).subscribe());
     WATCHERS$.subscribe(value => observeRouteService.watch(value).subscribe());

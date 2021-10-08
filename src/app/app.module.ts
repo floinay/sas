@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
 import {SasActionsModule} from '../../projects/sas/src/lib/actions';
-import {AirRouteObserverModule} from '../../projects/sas/src/lib/plugins/route-observer/air-route-observer.module';
+import {SasRouteObserverModule} from '../../projects/sas/src/lib/plugins/route-observer/sas-route-observer.module';
 import {SasStoragePluginModule} from '../../projects/sas/src/lib/plugins/storage/sas-storage-plugin.module';
 import {RouterModule} from '@angular/router';
 import {RouteComponentComponent} from './route-component/route-component.component';
@@ -30,7 +30,7 @@ import {HttpClientModule} from '@angular/common/http';
       }
     ]),
 
-    AirRouteObserverModule
+    SasRouteObserverModule
   ],
   providers: [],
   bootstrap: [AppComponent]

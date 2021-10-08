@@ -1,6 +1,6 @@
 import {Inject, Injectable, Injector} from '@angular/core';
-import {filter, map, tap} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {filter, map, take, tap} from 'rxjs/operators';
+import {isObservable, Observable} from 'rxjs';
 import {StateContract} from '../../../state';
 import {RouterService} from '../interfaces/router-service';
 import {ROUTER_SERVICE} from '../providers';
@@ -23,7 +23,6 @@ export interface RouteObserverWatcher {
 export type RouteParameters = { [key: string]: string; };
 
 
-
 @Injectable({providedIn: 'root'})
 export class ObserveRouteService {
   constructor(@Inject(ROUTER_SERVICE) private router: RouterService,
@@ -38,7 +37,10 @@ export class ObserveRouteService {
       filter(v => Boolean(v) && this.urlService.checkQueryParams(queryParams)),
       tap(value => {
         const bindCallback = callback.bind(this.injector.get(base));
-        bindCallback(new RouteContext(value, this.router.queryParams()));
+        const response = bindCallback(new RouteContext(value, this.router.queryParams()));
+        if (isObservable(response)) {
+          response.pipe(take(1)).subscribe();
+        }
       })
     );
   }
