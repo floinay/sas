@@ -15,7 +15,7 @@ export class ObserveRouteLeaveService {
   private queryParamsHistory: QueryParams[] = [];
 
   private get previousUrl(): string | undefined {
-    return this.urlHistory[this.urlHistory.length - 2]
+    return this.urlHistory[this.urlHistory.length - 2];
   }
 
   private get previousQueryParams(): QueryParams | undefined {
@@ -60,7 +60,7 @@ export class ObserveRouteLeaveService {
           )
         );
         if (isObservable(response)) {
-          response.pipe(take(1)).subscribe();
+          response.subscribe();
         }
       })
     );

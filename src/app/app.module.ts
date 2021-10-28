@@ -29,7 +29,6 @@ import {HttpClientModule} from '@angular/common/http';
         loadChildren: () => import('./lazy-page/lazy-page.module').then(m => m.LazyPageModule)
       }
     ]),
-
     SasRouteObserverModule
   ],
   providers: [],

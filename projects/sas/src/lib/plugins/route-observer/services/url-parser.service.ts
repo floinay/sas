@@ -1,8 +1,8 @@
-import {Inject, Injectable} from '@angular/core';
-import {QueryParams, RouteParameters} from './observe-route.service';
-import {isEmpty} from 'lodash-es';
-import {ROUTER_SERVICE} from '../providers';
-import {RouterService} from '../interfaces/router-service';
+import { Inject, Injectable } from '@angular/core';
+import { QueryParams, RouteParameters } from './observe-route.service';
+import { isEmpty } from 'lodash-es';
+import { ROUTER_SERVICE } from '../providers';
+import { RouterService } from '../interfaces/router-service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class UrlParserService {
       }
 
       return value === routeParams[key];
-    }).length)
+    }).length);
   }
 
 
@@ -41,7 +41,7 @@ export class UrlParserService {
 
     for (let i = 0; i < splitUrl.length; i++) {
       const urlPath = splitUrl[i];
-      const currentUrlPath = splitUrl[i];
+      const currentUrlPath = splitCurrentUrl[i];
 
       if (urlPath.includes(':')) {
         parameters[urlPath.replace(':', '')] = currentUrlPath;

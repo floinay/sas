@@ -1,17 +1,17 @@
-import {Inject, Injectable, Injector} from '@angular/core';
-import {filter, map, take, tap} from 'rxjs/operators';
-import {isObservable, Observable} from 'rxjs';
-import {StateContract} from '../../../state';
-import {RouterService} from '../interfaces/router-service';
-import {ROUTER_SERVICE} from '../providers';
-import {UrlParserService} from './url-parser.service';
-import {RouteContext} from './context/route-context';
+import { Inject, Injectable, Injector } from '@angular/core';
+import { filter, map, take, tap } from 'rxjs/operators';
+import { isObservable, Observable } from 'rxjs';
+import { StateContract } from '../../../state';
+import { RouterService } from '../interfaces/router-service';
+import { ROUTER_SERVICE } from '../providers';
+import { UrlParserService } from './url-parser.service';
+import { RouteContext } from './context/route-context';
 
 
-type WithContextType = (context: RouteContext) => any
+type WithContextType = (context: RouteContext) => any;
 type NopeContextType = () => any;
 export type ObserveRouteMethodType = NopeContextType | WithContextType;
-export type QueryParams = { [key: string]: string; }
+export type QueryParams = { [key: string]: string; };
 
 export interface RouteObserverWatcher {
   url: string;
@@ -39,7 +39,7 @@ export class ObserveRouteService {
         const bindCallback = callback.bind(this.injector.get(base));
         const response = bindCallback(new RouteContext(value, this.router.queryParams()));
         if (isObservable(response)) {
-          response.pipe(take(1)).subscribe();
+          response.subscribe();
         }
       })
     );

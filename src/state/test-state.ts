@@ -1,10 +1,9 @@
 import {State} from '../../projects/sas/src/lib/state/state';
 import {Injectable} from '@angular/core';
-import {AbstractState, ObserveRouteLeave, Persistence} from '../../projects/sas/src/public-api';
+import { AbstractState, ObserveRouteLeave, Persistence, RouteContext } from '../../projects/sas/src/public-api';
 import {filter} from 'rxjs/operators';
 import {ObserveRoute} from '../../projects/sas/src/lib/plugins/route-observer/observe-route';
 import {HttpClient} from '@angular/common/http';
-import {RouteContext} from 'sas';
 import {LeaveRouteContext} from '../../projects/sas/src/lib/plugins/route-observer/services/context/leave-route-context';
 
 interface TestStateInterface {
@@ -27,11 +26,9 @@ export class TestState extends AbstractState<TestStateInterface> {
     super();
   }
 
-  @ObserveRoute('/lazy')
+  @ObserveRoute('/test/:p')
   fetch(context: RouteContext): void {
-    console.log(this.httpClient);
-    this.resetState();
-    this.patchState({name: 'Lazy'});
+    console.log(context);
   }
 
   @ObserveRouteLeave('/lazy', {test: '2'})

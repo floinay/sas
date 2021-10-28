@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {TestState} from '../../state/test-state';
+import { Component, OnInit } from '@angular/core';
+import { TestState } from '../../state/test-state';
 
 @Component({
   selector: 'app-lazy-page',

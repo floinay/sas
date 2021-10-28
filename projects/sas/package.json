@@ -1,6 +1,6 @@
 {
   "name": "@floinay/sas",
-  "version": "2.0.3",
+  "version": "2.2.0",
   "private": false,
   "peerDependencies": {
     "@angular/common": "^12.2.1",
