@@ -11,7 +11,8 @@ export class RouterService implements RouterServiceContract {
     filter((e) => e instanceof NavigationEnd)
   ) as Observable<NavigationEnd>;
   readonly onNavigationEnd$: Observable<string> = this.baseFilter$.pipe(map(e => {
-    return e.url.split('?')[0];
+    const url = e.urlAfterRedirects ?? e.url;
+    return url.split('?')[0];
   }));
 
   queryParams(): QueryParams {
